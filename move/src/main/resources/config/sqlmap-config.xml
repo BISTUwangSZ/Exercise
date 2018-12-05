@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!--<settings>-->
+    <!--&lt;!&ndash; changes from the defaults &ndash;&gt;-->
+    <!--<setting name="lazyLoadingEnabled" value="false" />-->
+    <!--console打印sql config-->
+    <!--<setting name="logImpl" value="LOG4J"/>-->
+    <!--</settings>-->
+    <!-- myBatis配置实现数据库字段下划线映射到java对象的驼峰式命名属性 -->
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true" />
+        <setting name="logImpl" value="STDOUT_LOGGING" />
+    </settings>
+    <typeAliases>
+        <typeAlias alias="hashMap" type="java.util.HashMap"/>
+    </typeAliases>
+
+</configuration>

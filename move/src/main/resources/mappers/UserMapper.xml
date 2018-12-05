@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="cn.com.exercise.move.module.UserMapper">
+      <resultMap id="user" type="cn.com.exercise.move.module.UserCondition">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="gender" property="gender"/>
+        <result column="age" property="age"/>
+        <result column="psw" property="psw"/>
+        <result column="seq" property="seq"/>
+    </resultMap>
+
+    <select id="getUser" resultType="cn.com.exercise.move.module.UserCondition">
+        select id,name,gender,age,psw,seq from a order by seq asc
+    </select>
+    <update id="updateOthersSeq" parameterType="cn.com.exercise.move.module.UserCondition">
+        update a set seq = seq+1
+        <where>
+            <if test="seq!=null">
+                seq <![CDATA[ < ]]>  #{seq}
+            </if>
+        </where>
+    </update>
+    <update id="makeTop" parameterType="cn.com.exercise.move.module.UserCondition">
+        update a set seq=1
+        <where>
+            <if test="id!=null">
+                id = #{id};
+            </if>
+        </where>
+    </update>
+    <select id="getUserById" parameterType="cn.com.exercise.move.module.UserCondition" resultMap="user">
+        select * from a
+        <where>
+            <if test="id!=null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+    <select id="getLastSeq" parameterType="cn.com.exercise.move.module.UserCondition" resultMap="user">
+        SELECT * from a
+        <where>
+            <if test="seq!=null">
+                (seq <![CDATA[ < ]]>  #{seq} OR seq=(SELECT MIN(seq) FROM a ) )
+            </if>
+        </where>
+        ORDER BY seq DESC limit 1
+    </select>
+    <select id="getNextSeq" parameterType="cn.com.exercise.move.module.UserCondition" resultMap="user">
+        SELECT * from a
+        <where>
+            <if test="seq!=null">
+                (seq <![CDATA[ > ]]>  #{seq} OR seq=(SELECT MAX(seq) FROM a ) )
+            </if>
+        </where>
+        ORDER BY seq asc limit 1
+    </select>
+    <update id="update" parameterType="cn.com.exercise.move.module.UserCondition" >
+        update a
+        <set>
+            <if test="seq!=null">
+                seq = #{seq}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+    <select id="getMaxSeq" resultType="java.lang.Integer">
+        select MAX(seq) from a
+    </select>
+    <select id="getMinSeq" resultType="java.lang.Integer">
+        select MIN(seq) from a
+    </select>
+</mapper>

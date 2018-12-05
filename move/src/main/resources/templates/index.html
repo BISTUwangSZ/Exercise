@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>移动</title>
+    <script th:src="@{/static/js/move.js}"></script>
+    <script th:src="@{https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js}"></script>
+    <script th:src="@{http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</head>
+<body>
+    <input type="text" id="id" placeholder="id">
+    <button id="makeTop" th:onclick="makeTop()">置顶</button>
+    <br />
+    <input type="text" id="up_id" placeholder="id">
+    <button id="moveUp" th:onclick="moveUp()">上移</button>
+    <br />
+    <input type="text" id="down_id" placeholder="id">
+    <button id="moveDown" th:onclick="moveDown()">下移</button>
+    <br />
+    <textarea style="height: 200px ; width: 600px" id="show"></textarea>
+</body>
+</html>
