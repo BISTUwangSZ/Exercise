@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.exercise.dynamicDatasourse.module.mapper.DynamicMapper">
+    <resultMap id="user" type="cn.com.exercise.dynamicDatasourse.module.condition.DynamicCondition">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="age" property="age" />
+        <result column="gender" property="gender" />
+        <result column="seq" property="seq" />
+    </resultMap>
+    <select id="getListFromSource1" resultMap="user">
+        SELECT * FROM a order by seq desc
+    </select>
+    <select id="getListFromSource2" resultMap="user">
+        SELECT * FROM a order by seq desc
+    </select>
+</mapper>
