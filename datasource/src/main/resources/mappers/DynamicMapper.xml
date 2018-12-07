@@ -12,6 +12,6 @@
         SELECT * FROM a order by seq desc
     </select>
     <select id="getListFromSource2" resultMap="user">
-        SELECT * FROM a order by seq desc
+        SELECT * FROM b order by seq desc
     </select>
 </mapper>

@@ -202,25 +202,17 @@ public class DataSourceConfig extends LogFactory{
         DynamicDataSource dynamicRoutingDataSource = new DynamicDataSource();
         //配置多数据源
         Map<Object, Object> dataSourceMap = new HashMap<>(2);
-        dataSourceMap.put(DynamicDataSourceHolder.DB_TYPE_RW, master());
-        dataSourceMap.put(DynamicDataSourceHolder.DB_TYPE_R, slave());
-        // 将 master 数据源作为默认指定的数据源
-        dynamicRoutingDataSource.setDefaultTargetDataSource(master());
+        dataSourceMap.put(DBHelper.DB_TYPE_RW, master());
+        dataSourceMap.put(DBHelper.DB_TYPE_R, slave());
         // 将 master 和 slave 数据源作为指定的数据源
         dynamicRoutingDataSource.setTargetDataSources(dataSourceMap);
+        // 将 master 数据源作为默认指定的数据源
+        dynamicRoutingDataSource.setDefaultTargetDataSource(master());
         return dynamicRoutingDataSource;
-    }
-
-    @Bean(name="dataSourceProxy")
-    public TransactionAwareDataSourceProxy dataSourceProxy(){
-        TransactionAwareDataSourceProxy proxy = new TransactionAwareDataSourceProxy();
-        proxy.setTargetDataSource(dynamicDataSource());
-        return proxy;
     }
 
     @Bean(name = "sqlSessionFactory")
     public SqlSessionFactoryBean sqlSessionFactoryBean() throws Exception{
-
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setVfs(SpringBootVFS.class);
         sqlSessionFactoryBean.setTypeAliasesPackage(typeAlias);
@@ -228,7 +220,7 @@ public class DataSourceConfig extends LogFactory{
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         String packageSearchPath = PathMatchingResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX+mapperLocation;
         sqlSessionFactoryBean.setMapperLocations(resolver.getResources(packageSearchPath));
-        sqlSessionFactoryBean.setDataSource(dataSourceProxy());
+        sqlSessionFactoryBean.setDataSource(dynamicDataSource());
         return  sqlSessionFactoryBean;
     }
 
@@ -239,7 +231,7 @@ public class DataSourceConfig extends LogFactory{
 
     @Bean(name = "transactionManager")
     public PlatformTransactionManager transactionManager() {
-        DataSourceTransactionManager manager = new DataSourceTransactionManager(dataSourceProxy());
+        DataSourceTransactionManager manager = new DataSourceTransactionManager(dynamicDataSource());
         return manager;
     }
 

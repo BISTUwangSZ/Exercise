@@ -13,7 +13,7 @@
     <!-- myBatis配置实现数据库字段下划线映射到java对象的驼峰式命名属性 -->
     <settings>
         <setting name="mapUnderscoreToCamelCase" value="true" />
-        <!--<setting name="logImpl" value="STDOUT_LOGGING" />-->
+        <setting name="logImpl" value="STDOUT_LOGGING" />
     </settings>
     <typeAliases>
         <typeAlias alias="hashMap" type="java.util.HashMap"/>

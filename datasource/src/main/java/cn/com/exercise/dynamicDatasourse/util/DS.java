@@ -8,5 +8,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE,ElementType.METHOD})
 public @interface DS {
-    String value() default "masterDataSource";
+    String value() default DBHelper.DB_TYPE_RW;
 }

@@ -13,12 +13,12 @@ public class DBHelper {
     public static final String DB_TYPE_R = "dataSource_db02";
   
     public String getDBType() {
-        String db = contextHolder.get();  
+        String db = contextHolder.get();
         if (db == null) {
             db = DB_TYPE_RW;
             // 默认是读写库
         }
-        return db;  
+        return db;
     }
   
     public void setDBType(String str) {
