@@ -3,7 +3,6 @@ package cn.com.exercise.batch.object;
 import cn.com.exercise.batch.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service

@@ -2,7 +2,6 @@ package cn.com.exercise.batch;
 
 import cn.com.exercise.batch.entity.UserEntity;
 import com.alibaba.fastjson.JSON;
-import org.apache.catalina.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
