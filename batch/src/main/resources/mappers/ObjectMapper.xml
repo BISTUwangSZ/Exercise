@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.exercise.batch.object.ObjectMapper">
+
+    <resultMap id="user" type="cn.com.exercise.batch.entity.UserEntity">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="gender" property="gender"/>
+        <result column="age" property="age"/>
+        <result column="psw" property="psw"/>
+        <result column="seq" property="seq"/>
+    </resultMap>
+
+    <select id="batchSelect" resultMap="user">
+        select * from a
+        <where>
+            <if test="userEntity.age!=null">
+                and age = #{userEntity.age}
+            </if>
+            <if test="nameList.size()!=0">
+                and name in
+                <foreach collection="nameList" separator="," open="(" close=")" index="index" item="name">
+                    #{name}
+                </foreach>
+            </if>
+        </where>
+
+    </select>
+
+    <insert id="batchAdd" parameterType="java.util.List">
+        INSERT INTO a(name, age, gender, psw, seq) values
+        <foreach collection="list" item="item" index="index"  separator=",">
+            ( #{item.name},#{item.age},#{item.gender},#{item.psw},#{item.seq})
+        </foreach>
+    </insert>
+
+    <delete id="batchDelete" parameterType="java.util.List">
+        DELETE FROM a where id in
+        <foreach collection="idList" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <update id="batchUpdateOneVariable" >
+        UPDATE a set psw=#{user.psw}
+        <where>
+            id in (
+            <if test="idList.size()!=0">
+                <foreach collection="idList" separator="," item="item" index="index">
+                    #{item}
+                </foreach>
+            </if>
+            )
+        </where>
+    </update>
+</mapper>
