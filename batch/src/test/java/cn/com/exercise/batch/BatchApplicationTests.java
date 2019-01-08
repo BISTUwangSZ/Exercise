@@ -36,7 +36,7 @@ public class BatchApplicationTests {
 	private WebApplicationContext wac;
 
 	@Before
-	public void brfore(){
+	public void before(){
 		mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
 	}
 
@@ -96,9 +96,9 @@ public class BatchApplicationTests {
     @Test
     public void testDelete() throws Exception{
         List<Integer> list = new ArrayList<>();
-        list.add(8);
-        list.add(9);
-        list.add(10);
+        list.add(17);
+        list.add(18);
+        list.add(19);
         MvcResult mvcResult = mockMvc.perform(get("/object/batchDelete")
                 .param("idStr",JSON.toJSONString(list))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED))

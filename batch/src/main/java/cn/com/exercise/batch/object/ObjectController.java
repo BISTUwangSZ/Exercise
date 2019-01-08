@@ -18,8 +18,8 @@ public class ObjectController {
 
     @RequestMapping(value = "batchAdd")
     @ResponseBody
-    public Integer batchAdd(String getStr){
-        List<UserEntity> list = JSON.parseArray(getStr,UserEntity.class);
+    public Integer batchAdd(String userEntity){
+        List<UserEntity> list = JSON.parseArray(userEntity,UserEntity.class);
         return objectService.batchAdd(list);
     }
 
@@ -41,7 +41,6 @@ public class ObjectController {
     @RequestMapping(value = "batchSelect")
     @ResponseBody
     public Object batchSelect(String list, String entity){
-        System.out.println();
         List nameList = JSON.parseObject(list,List.class);
         UserEntity user = JSON.parseObject(entity,UserEntity.class);
         return objectService.batchSelect(user,nameList);
