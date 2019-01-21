@@ -1,6 +1,7 @@
 package cn.com.exercise.batch;
 
 import cn.com.exercise.batch.entity.UserEntity;
+import cn.com.exercise.batch.entity.UserEntity2;
 import com.alibaba.fastjson.JSON;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +16,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -40,6 +43,10 @@ public class BatchApplicationTests {
 		mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
 	}
 
+    /**
+     * 两个入参的查询
+     * @throws Exception
+     */
 	@Test
 	public void testSelect() throws Exception{
 		List<String> list = new ArrayList<>();
@@ -59,6 +66,71 @@ public class BatchApplicationTests {
 		System.out.println(JSON.parseArray(result,UserEntity.class));
 	}
 
+    /**
+     * 入参为对象的某个字段的查询
+     * @throws Exception
+     */
+    @Test
+    public void testSelect2() throws Exception{
+        List<Integer> list = new ArrayList<>();
+        list.add(11);
+        list.add(12);
+        list.add(13);
+        UserEntity2 entity = new UserEntity2();
+        entity.setIds(list);
+        MvcResult mvcResult = mockMvc.perform(get("/object/batchSelect2")
+                .param("entity",JSON.toJSONString(entity))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andReturn();
+        String result = mvcResult.getResponse().getContentAsString();
+        System.out.println(JSON.parseArray(result,UserEntity2.class));
+    }
+
+    /**
+     * 入参为array的查询
+     * @throws Exception
+     */
+    @Test
+    public void testSelect3() throws Exception{
+        Integer[] ids = {11,12,13};
+        MvcResult mvcResult = mockMvc.perform(get("/object/batchSelect3")
+                .param("getStr",JSON.toJSONString(ids))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andReturn();
+        String result = mvcResult.getResponse().getContentAsString();
+        System.out.println(JSON.parseArray(result,UserEntity2.class));
+    }
+
+    /**
+     * 入参为Map的查询
+     * @throws Exception
+     */
+    @Test
+    public void testSelect4() throws Exception{
+        Map<String,Object> myMap = new HashMap<>();
+        List<Integer> ids = new ArrayList();
+        ids.add(11);
+        ids.add(12);
+        ids.add(13);
+        myMap.put("idMap",ids);
+        myMap.put("ageMap",32);
+        MvcResult mvcResult = mockMvc.perform(get("/object/batchSelect4")
+                .param("myMap",JSON.toJSONString(myMap))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                .andExpect(status().isOk())
+                .andReturn();
+        String result = mvcResult.getResponse().getContentAsString();
+        System.out.println(JSON.parseArray(result,UserEntity.class));
+    }
+
+    /**
+     * 入参为List<?>的批量插入
+     * @throws Exception
+     */
     @Test
     public void testAdd() throws Exception{
         List<UserEntity> list = new ArrayList<>();
@@ -93,6 +165,10 @@ public class BatchApplicationTests {
         System.out.println(result);
     }
 
+    /**
+     * 入参为List,使用@Param的批量删除
+     * @throws Exception
+     */
     @Test
     public void testDelete() throws Exception{
         List<Integer> list = new ArrayList<>();
@@ -108,6 +184,10 @@ public class BatchApplicationTests {
         System.out.println(result);
     }
 
+    /**
+     * 两个入参的批量更新
+     * @throws Exception
+     */
     @Test
     public void testUpdateOneVariable() throws Exception{
 	    UserEntity userEntity = new UserEntity();

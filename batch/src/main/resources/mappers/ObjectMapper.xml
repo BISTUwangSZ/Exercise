@@ -28,6 +28,41 @@
 
     </select>
 
+    <select id="batchSelect2" parameterType="cn.com.exercise.batch.entity.UserEntity2" resultMap="user">
+        select * from a
+        <where>
+            id in
+            <foreach collection="ids" separator="," open="(" close=")" index="index" item="item">
+                #{item}
+            </foreach>
+        </where>
+    </select>
+
+    <select id="batchSelect3" parameterType="String" resultMap="user">
+        select * from a
+        <where>
+            id in
+            <foreach collection="array" separator="," open="(" close=")" index="index" item="item">
+                #{item}
+            </foreach>
+        </where>
+    </select>
+
+    <select id="batchSelect4" parameterType="java.util.Map" resultMap="user">
+        select * from a
+        <where>
+            <if test="ageMap!=null">
+                and age = #{ageMap}
+            </if>
+            <if test="idMap!=null">
+                and id in
+                <foreach collection="idMap" separator="," open="(" close=")" index="index" item="item">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
     <insert id="batchAdd" parameterType="java.util.List">
         INSERT INTO a(name, age, gender, psw, seq) values
         <foreach collection="list" item="item" index="index"  separator=",">
