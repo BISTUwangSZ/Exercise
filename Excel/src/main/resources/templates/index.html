@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Title</title>
+    <script th:src="@{https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js}"></script>
+    <script th:src="@{http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    <script th:src="@{/static/js/excel.js}"></script>
+    <script th:src="@{/static/js/plugin/ajaxupload.3.6.js}"></script>
 </head>
 <body>
-$END$
+<textarea id="tableArea" style="width: 700px;height: 400px"></textarea><br />
+<button id="btn_import" class="btn btn-default" type="submit" onclick="initUploadGoodsExcel()" style="margin-bottom: 3px">导入Excel</button>
+<button id="btn_download" class="btn btn-default" type="submit" onclick="initDownloadGoodsExcel()" style="margin-bottom: 3px">导出Excel</button>
+
 </body>
 </html>

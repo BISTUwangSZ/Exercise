@@ -1,75 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.com.hiveview.launcherapi.module.portal.mapper.ActivityMapper">
-    <resultMap id="activityMap" type="cn.com.hiveview.entity.module.portal.ActivityList">
-        <id column="id" property="activityId" />
-        <result column="activity_name" property="activityName" />
-        <result column="activity_status" property="activityStatus" />
-        <result column="activity_img" property="activityImg" />
-        <result column="is_vip" property="isVip" />
-        <result column="templet_id" property="templetId" />
-        <result column="apk_bag_name" property="apkBagName" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
-    </resultMap>
-    <select id="getPageList" resultMap="activityMap"
-            parameterType="cn.com.hiveview.launcherapi.module.portal.condition.ActivityCondition">
-        SELECT
-        id,
-        activity_name,
-        activity_status,
-        activity_img,
-        is_vip,
-        templet_id,
-        apk_bag_name,
-        create_time,
-        update_time
-        FROM new_activity
+<mapper namespace="cn.com.exercise.excel.ExcelMapper">
+
+    <update id="upload" parameterType="java.util.List">
+        UPDATE excel
+        set status=1
+        where status !=1 and id in (
+        <foreach collection="list" item="item" index="index" open="" close="" separator=",">
+            #{item}
+        </foreach>
+        )
+    </update>
+
+    <select id="getList" resultType="cn.com.exercise.excel.ExcelCondition" parameterType="cn.com.exercise.excel.ExcelCondition">
+        select * from excel
         <where>
-            <if test="activityId != null">
-                AND id = #{activityId}
-            </if>
-            <if test="activityName != null and activityName != ''">
-                activity_name LIKE CONCAT ('%',#{activityName},'%')
-            </if>
-            <if test="activityStatus != null">
-                AND activity_status = #{activityStatus}
-            </if>
-            <if test="isVip != null">
-                and is_vip = #{isVip}
-            </if>
-            <if test="templetId != null">
-                and templet_id = #{templetId}
-            </if>
-            <if test="apkBagName != null and apkBagName != ''">
-                and apk_bag_name = #{apkBagName}
-            </if>
-        </where>
-        order by create_time desc
-        <if test="pageIndex >= 0 and pageSize >= 1">
-            LIMIT #{pageIndex}, #{pageSize}
-        </if>
-    </select>
-    <select id="getPageCount" resultType="Integer" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.ActivityCondition">
-        SELECT COUNT(1) FROM new_activity
-        <where>
-            <if test="activityId != null">
-                AND id = #{activityId}
-            </if>
-            <if test="activityName != null and activityName != ''">
-                activity_name LIKE CONCAT ('%',#{activityName},'%')
-            </if>
-            <if test="activityStatus != null">
-                AND activity_status = #{activityStatus}
-            </if>
-            <if test="isVip != null">
-                and is_vip = #{isVip}
-            </if>
-            <if test="templetId != null">
-                and templet_id = #{templetId}
-            </if>
-            <if test="apkBagName != null and apkBagName != ''">
-                and apk_bag_name = #{apkBagName}
+            <if test="status!=null">
+                status=#{status}
             </if>
         </where>
     </select>

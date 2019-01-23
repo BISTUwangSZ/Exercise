@@ -1,4 +1,4 @@
-package cn.com.exercise.excel;
+package cn.com.exercise;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
