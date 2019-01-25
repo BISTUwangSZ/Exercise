@@ -14,7 +14,7 @@ import java.util.List;
 
 public class Excelutils {
 
-    public static <T> HSSFWorkbook export(HttpServletResponse response, String fileName, String[] title, List<ExcelCondition> dataList) throws Exception{
+    public static void export(HttpServletResponse response, String fileName, String[] title, List<ExcelCondition> dataList) throws Exception{
         // 设置请求
         response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-disposition",
@@ -91,7 +91,6 @@ public class Excelutils {
         // 刷新流
         outputStream.flush();
         // 关闭流
-        outputStream.close();
-        return wb;
+//        outputStream.close();
     }
 }

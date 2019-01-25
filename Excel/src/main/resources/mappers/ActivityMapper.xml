@@ -2,16 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.com.exercise.excel.ExcelMapper">
 
-    <update id="upload" parameterType="java.util.List">
-        UPDATE excel
-        set status=1
-        where status !=1 and id in (
-        <foreach collection="list" item="item" index="index" open="" close="" separator=",">
-            #{item}
-        </foreach>
-        )
-    </update>
-
     <select id="getList" resultType="cn.com.exercise.excel.ExcelCondition" parameterType="cn.com.exercise.excel.ExcelCondition">
         select * from excel
         <where>
@@ -20,4 +10,13 @@
             </if>
         </where>
     </select>
+
+    <insert id="upload" parameterType="java.util.List" >
+        insert into excel (excel1,excel2,excel3,status) VALUES
+        <foreach collection="list" index="index" item="item" separator=",">
+              (#{item.excel1},#{item.excel2},#{item.excel3},#{item.status})
+        </foreach>
+    </insert>
+
+
 </mapper>

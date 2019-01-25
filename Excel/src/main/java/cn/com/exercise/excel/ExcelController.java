@@ -21,6 +21,7 @@ import java.util.*;
 @Controller
 @RequestMapping("excel")
 public class ExcelController {
+    private String uploadExcelPath = "d:/";
 
     @Autowired
     private ExcelService excelService;
@@ -45,8 +46,7 @@ public class ExcelController {
         HashMap<String, String> result = null;
         try{
             ExcelCondition condition = JSON.parseObject(strPo,ExcelCondition.class);
-            result=excelService.getExcel(condition,response);
-            return result;
+            return excelService.getExcel(condition,response);
         }catch (Exception e){
             e.printStackTrace();
             result.put("msg","false");
@@ -55,4 +55,36 @@ public class ExcelController {
     }
 
 
+    /**
+     * 保存上传文件副本的同时导入
+     * @param file
+     * @return
+     */
+    /*@RequestMapping(value = "/uploadExcel")
+    @ResponseBody
+    public Object uploadExcel(@RequestParam(value = "file", required = false) MultipartFile file) {
+        Integer result = null;
+        try{
+            result = excelService.uploadExcel(file,uploadExcelPath);
+            return result;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }*/
+
+
+    @RequestMapping(value = "/uploadExcel")
+    @ResponseBody
+    public Object uploadExcel2(@RequestParam(value = "file", required = false) MultipartFile file) {
+        //仅导入，不保存副本
+        Integer result = null;
+        try{
+            result = excelService.uploadExcel2(file);
+            return result;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
