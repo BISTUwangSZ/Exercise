@@ -27,7 +27,8 @@ function initDownloadGoodsExcel() {
 function initUploadExcel() {
     var button = $('#btn_import');
     new AjaxUpload(button, {
-        action :  '/excel/uploadExcel',
+        action :  '/excel/uploadExcelWithCopy',
+        // action :  '/excel/uploadExcel',
         autoSubmit : true,
         name : 'file',// 文件对象名称（不是文件名）
         data : {},

@@ -54,15 +54,10 @@ public class ExcelController {
         }
     }
 
-
-    /**
-     * 保存上传文件副本的同时导入
-     * @param file
-     * @return
-     */
-    /*@RequestMapping(value = "/uploadExcel")
+    @RequestMapping(value = "/uploadExcelWithCopy")
     @ResponseBody
-    public Object uploadExcel(@RequestParam(value = "file", required = false) MultipartFile file) {
+    public Object uploadExcelWithCopy(@RequestParam(value = "file", required = false) MultipartFile file) {
+        //保存上传文件副本的同时导入
         Integer result = null;
         try{
             result = excelService.uploadExcel(file,uploadExcelPath);
@@ -71,12 +66,12 @@ public class ExcelController {
             e.printStackTrace();
             return null;
         }
-    }*/
+    }
 
 
     @RequestMapping(value = "/uploadExcel")
     @ResponseBody
-    public Object uploadExcel2(@RequestParam(value = "file", required = false) MultipartFile file) {
+    public Object uploadExcel(@RequestParam(value = "file", required = false) MultipartFile file) {
         //仅导入，不保存副本
         Integer result = null;
         try{
